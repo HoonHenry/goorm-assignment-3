@@ -1,3 +1,3 @@
 terraform/
 !terraform/main.tf
-!terraform/modules
+!terraform/modules/*
