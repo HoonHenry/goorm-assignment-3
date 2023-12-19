@@ -11,7 +11,7 @@ subnet_cidr4="10.0.112.0/20"
 igw_name="$vpc_name-igw-1"
 rtb_name="$vpc_name-rtb-1"
 
-aws ec2 describe-availability-zones --region $region --output text && \
+aws ec2 describe-availability-zones --region $region --output text --no-cli-pager && \
 
 # Create VPC and extract VPC ID
 vpc_id=$(aws ec2 create-vpc --cidr-block $vpc_cidr --query 'Vpc.VpcId' --output text) && \
