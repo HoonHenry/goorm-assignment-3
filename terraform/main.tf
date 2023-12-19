@@ -3,8 +3,11 @@ provider "aws" {
 }
 
 resource "aws_security_group" "alb_sg" {
-  name        = "alb-security-group"
+#   name        = "alb-security-group"
+  name        = "vpc-alb-1-sg-alb-1"
   description = "Security group for ALB"
+#   vpc_id   = "vpc-abcdef" # Replace with your VPC ID
+  vpc_id   = "vpc-00de5fd5e04d7d279" # Replace with your VPC ID
 
   ingress {
     from_port   = 80
@@ -15,8 +18,11 @@ resource "aws_security_group" "alb_sg" {
 }
 
 resource "aws_security_group" "instance_sg" {
-  name        = "instance-security-group"
+#   name        = "instance-security-group"
+  name        = "vpc-alb-1-sg-i-1"
   description = "Security group for EC2 instance"
+#   vpc_id   = "vpc-abcdef" # Replace with your VPC ID
+  vpc_id   = "vpc-00de5fd5e04d7d279" # Replace with your VPC ID
 
   ingress {
     from_port   = 80
@@ -47,7 +53,8 @@ resource "aws_lb" "nginx_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
-  subnets            = ["subnet-12345abcde", "subnet-67890fghij"] # Replace with your subnet IDs
+#   subnets            = ["subnet-abcde", "subnet-fghij"] # Replace with your subnet IDs
+  subnets            = ["subnet-0354ba06505d37a99", "subnet-06617a9057662659b"] # Replace with your subnet IDs
 
   enable_deletion_protection = false
 
@@ -60,7 +67,8 @@ resource "aws_lb_target_group" "nginx_tg" {
   name     = "nginx-target-group"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = "vpc-01abcde2345fghijk" # Replace with your VPC ID
+#   vpc_id   = "vpc-abcdef" # Replace with your VPC ID
+  vpc_id   = "vpc-00de5fd5e04d7d279" # Replace with your VPC ID
 
   health_check {
     healthy_threshold   = 3
